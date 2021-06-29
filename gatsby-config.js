@@ -17,7 +17,7 @@ module.exports = {
 	},
 	plugins: [
 		{ resolve: `gatsby-plugin-antd` },
-		'gatsby-plugin-postcss'
+		'gatsby-plugin-postcss',
 		{ resolve: `gatsby-plugin-react-helmet` },
 		{ resolve: `gatsby-plugin-remove-trailing-slashes` },
 		{ resolve: `gatsby-plugin-sharp` },

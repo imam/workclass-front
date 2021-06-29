@@ -5,6 +5,7 @@
  */
 import 'firebase/auth';
 import './static/css/global.css';
+import './src/styles/tailwind.css';
 
 export const onServiceWorkerUpdateReady = () => {
 	/**

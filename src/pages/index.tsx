@@ -48,7 +48,7 @@ const IndexPage: React.FC = () => {
 			)}
 
 			{jobs.map(job => (
-				<Col key={job.job_id} span={6}>
+				<Col key={job.job_id}>
 					<JobCard job={job} />
 				</Col>
 			))}

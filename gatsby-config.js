@@ -1,3 +1,4 @@
+require('dotenv').config()
 module.exports = {
 	flags: {
 		PARALLEL_SOURCING: true,

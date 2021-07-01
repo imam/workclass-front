@@ -1,4 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons';
+import {Link} from "gatsby"
 import * as React from 'react';
 import { Col, message, Row, Spin, Typography } from 'antd';
 import { getJobs } from '../common/api';
@@ -34,9 +35,9 @@ const IndexPage: React.FC = () => {
 	}, []);
 
 	return (
-		<Row justify="center" gutter={[20, 20]}>
+		<Row justify="center" gutter={[20, 20]} className="pb-[70px] mr-0" >
 			<Col span={24}>
-				<Title style={s.title}>Jobs</Title>
+				<Title style={s.title} className="text-white">Jobs</Title>
 			</Col>
 
 			{loading && (
@@ -49,7 +50,9 @@ const IndexPage: React.FC = () => {
 
 			{jobs.map(job => (
 				<Col key={job.job_id}>
-					<JobCard job={job} />
+					<Link to={`/jobs/${job.job_id}`}>
+						<JobCard job={job} />
+					</Link>
 				</Col>
 			))}
 		</Row>

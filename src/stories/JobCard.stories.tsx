@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import JobCard from '../components/job-card';
 
 export default {
-  title: 'Cards/JobCard',
+  title: 'Job/Card',
   component: JobCard,
   argTypes: {
   },

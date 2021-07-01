@@ -4,57 +4,32 @@ import * as React from 'react';
 import { Col, message, Row, Spin, Typography } from 'antd';
 import { getJobs } from '../common/api';
 import JobCard from '../components/job-card';
+import JobSearch from '../components/job-search'
+import { connectHits } from 'react-instantsearch-dom';
 
 const { useEffect, useState } = React;
 const { Title } = Typography;
 
+const CustomHits = connectHits(({ hits }) => {
+  return <div className="flex flex-wrap justify-center">
+    {hits.map(hit => {
+		//To convert from unix timestamp to Javascript date
+		// We need to multiply the unix number by 1000
+		// Refer: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+		hit.activation_date = hit.activation_date * 1000
+		return <div className="m-[10px]"><Link to={`/jobs/${hit.job_id}`}>
+			<JobCard job={hit} />
+		</Link></div>
+      })}
+  </div>
+})
+
 const IndexPage: React.FC = () => {
-	const [loading, setLoading] = useState(false);
-	const [jobs, setJobs] = useState<IDataJob[]>([]);
-
-	useEffect(() => {
-		/**
-		 * On load, we fetch newest jobs
-		 */
-
-		const loadJobs = async () => {
-			setLoading(true);
-			try {
-				const data = await getJobs();
-				setJobs(data.jobs);
-			} catch {
-				// We set the jobs to empty array in the case of failures
-				setJobs([]);
-				message.error('Failed to load jobs, please try again later');
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		loadJobs();
-	}, []);
-
 	return (
 		<Row justify="center" gutter={[20, 20]} className="pb-[70px] mr-0" >
-			<Col span={24}>
-				<Title style={s.title} className="text-white">Jobs</Title>
-			</Col>
-
-			{loading && (
-				<Col span={24}>
-					<Row justify="center">
-						<Spin indicator={<LoadingOutlined style={{ fontSize: 50 }} />} />
-					</Row>
-				</Col>
-			)}
-
-			{jobs.map(job => (
-				<Col key={job.job_id}>
-					<Link to={`/jobs/${job.job_id}`}>
-						<JobCard job={job} />
-					</Link>
-				</Col>
-			))}
+			<JobSearch>
+				<CustomHits />
+			</JobSearch>	
 		</Row>
 	);
 };
@@ -67,3 +42,4 @@ const s: Stylesheet = {
 };
 
 export default IndexPage;
+

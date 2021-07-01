@@ -16,7 +16,7 @@ const JobCard: React.FC<IProps> = memo(props => {
 	const { job } = props;
 
 	return (
-		<Card hoverable className="w-full" bodyStyle={{padding: '32px', borderRadius: "20px"}}>
+		<Card className="w-full" bodyStyle={{padding: '32px', borderRadius: "20px"}}>
 			<div className="flex">
 				<div className="mr-[16px]">
 					<div style={{backgroundImage: `url('${job.logo_url}')`}} className="w-[40px] h-[40px] bg-contain bg-no-repeat bg-center"/>

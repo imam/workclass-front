@@ -7,6 +7,7 @@ import {
     connectSearchBox,
     connectStateResults,
     InstantSearch,
+	connectSortBy,
 } from 'react-instantsearch-dom';
 
 const { memo } = React;
@@ -81,7 +82,20 @@ const CustomRefinementList = connectRefinementList(({
 	const { Option } = Select
 	return <Select onChange={value => refine(value)} value={currentRefinement.length > 0 ? currentRefinement[0] : ""} className="md:mx-[5px]">
 		<Option value="">{placeholder}</Option>
-		{items.map(item => <Option value={item.label}>{item.label} ({item.count})</Option>)}
+		{items.map(item => <Option value={item.label} key={item.label}>{item.label} ({item.count})</Option>)}
+	</Select>
+  })
+
+const CustomSortBy = connectSortBy(({
+	items,
+	currentRefinement,
+	refine,
+	createURL,
+	placeholder
+  }) => {
+	const { Option } = Select
+	return <Select onChange={value => refine(value)} value={currentRefinement} className="md:mx-[5px]">
+		{items.map(item => <Option value={item.value} key={item.value}>{item.label}</Option>)}
 	</Select>
   })
 
@@ -97,6 +111,12 @@ const JobSearch: React.FC = memo(props => {
 					<div className="md:flex block justify-center mb-[5px]">
 						<CustomRefinementList placeholder="Choose Job Type" attribute="job_type" />
 						<CustomRefinementList placeholder="Choose Employment Type" attribute="employment_type" />
+						<CustomSortBy defaultRefinement="Job" items={[
+							{value: 'Job', label: 'Sort By Latest Job'},
+							{value: 'Job_oldest', label: 'Sort By Oldest Job'},
+							{value: 'Job_median_desc', label: 'Sort By Highest Median Salary'},
+							{value: 'Job_median_asc', label: 'Sort By Lowest Median Salary'},
+						]}/>
 					</div>
 					{props.children}	
 					<div className="flex justify-center mt-5 pb-5">

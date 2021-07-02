@@ -1,4 +1,8 @@
-export const MAIN_URL = process.env.GATSBY_MAIN_API_URL;
+const removeTralingSlash = (site) => {     
+    return site.replace(/\/$/, "");
+} 
+
+export const MAIN_URL = removeTralingSlash(process.env.GATSBY_MAIN_API_URL);
 
 async function makeRequest<T>(request: IRequest, method: string): Promise<T> {
 	let url = `${MAIN_URL}/${request.endpoint}`;

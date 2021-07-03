@@ -17,8 +17,8 @@ interface IProps {
 }
 
 const searchClient = algoliasearch(
-	process.env.GATSBY_ALGOLIA_APP_ID,
-	process.env.GATSBY_ALGOLIA_SEARCH_KEY
+	process.env.GATSBY_ALGOLIA_APP_ID ? process.env.GATSBY_ALGOLIA_APP_ID : process.env.STORYBOOK_ALGOLIA_APP_ID,
+	process.env.GATSBY_ALGOLIA_SEARCH_KEY ? process.env.GATSBY_ALGOLIA_SEARCH_KEY : process.env.STORYBOOK_ALGOLIA_SEARCH_KEY,
 );
 
 const CustomSearchBox = connectSearchBox(({ currentRefinement, refine }) => (
